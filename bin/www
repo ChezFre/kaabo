@@ -9,8 +9,6 @@ const debug = require('debug')('onthaal-backend:server');
 const http  = require('http');
 const env   = require('dotenv').config();
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-
 /**
  * Get port from environment and store in Express.
  */

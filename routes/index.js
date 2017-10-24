@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -17,7 +20,7 @@ router.post('/webhook', (req, res) => {
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+            console.log(webhook_event.messaging);
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
@@ -112,6 +115,8 @@ function callSendAPI(sender_psid, response) {
         },
         "message": response
     };
+
+    console.log('page_access_token', PAGE_ACCESS_TOKEN);
 
     // Send the HTTP request to the Messenger Platform
     request({
