@@ -78,6 +78,8 @@ router.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
     let response;
 
+    console.log('handleMessage', received_message.text);
+
     // Check if the message contains text
     if (received_message.text) {    
         // Create the payload for a basic text message
