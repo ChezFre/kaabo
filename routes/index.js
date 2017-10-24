@@ -9,6 +9,8 @@ router.get('/', function(req, res, next) {
 router.post('/webhook', (req, res) => {
     const body = req.body;
 
+    console.log( body.object );
+
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
         body.entry.forEach(function(entry) {
