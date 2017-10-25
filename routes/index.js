@@ -139,7 +139,7 @@ function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
-    if(payload === 'REGISTER_USER") {
+    if(payload === "REGISTER_USER") {
         response = {
             "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich aanmeldt aan de balie";
         }
