@@ -190,10 +190,11 @@ router.get('/enable-greeting', (req, res) => {
     let pageId = req.query['pageId'];
 
     console.log( pageId );
+    console.log( `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}` );
 
     request({
-        "uri": `https://graph.facebook.com/v2.6/me/messenger_profile`,
-        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "uri": `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+        // "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
         "form": { 
             "get_started": {
