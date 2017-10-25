@@ -98,17 +98,19 @@ function handleMessage(sender_psid, received_message) {
         }
 
         response = {
-            "payload": {
-                "template_type":"button",
-                "text":"Er staat iemand voor je aan de deur. Wanneer kan je er zijn?",
-                "buttons": [
-                    {
-                        "type":"postback",
-                        "title":"Bookmark Item",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                      }                    
-                ]
+            "text": "Here's a quick reply!",
+            "quick_replies":[
+              {
+                "content_type":"text",
+                "title":"Search",
+                "payload":"yes",
+              },
+              {
+                "content_type":"text",
+                "title":"Something Else",
+                "payload":"no"
               }
+            ]
           };
 
         // response = {
