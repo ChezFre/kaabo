@@ -183,6 +183,8 @@ router.get('/enable-greeting', (req, res) => {
 
     let pageId = req.query['pageId'];
 
+    console.log( pageId );
+
     request({
         "uri": `https://graph.facebook.com/v2.6/${pageId}`,
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
@@ -200,9 +202,11 @@ router.get('/enable-greeting', (req, res) => {
         }
     }, (err, res, body) => {
         if (!err) {
-            console.log('message sent!')
+            console.log('user registered!')
+            res.status(200).send('user registered');
         } else {
-            console.error("Unable to send message:" + err);
+            console.error('unable to register user' + err);
+            res.status(403).send('unable to register user' + err);
         }
     }).on('response', function(response) {
         console.log(response.statusCode);
