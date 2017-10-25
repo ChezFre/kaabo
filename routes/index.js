@@ -200,7 +200,7 @@ router.get('/enable-greeting', (req, res) => {
                 }
             ]
         }
-    }, (err, res, body) => {
+    }, (err, response, body) => {
         if (!err) {
             console.log('user registered!')
             res.status(200).send('user registered');
