@@ -24,7 +24,6 @@ router.post('/webhook', (req, res) => {
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log(entry.messaging);
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
@@ -32,7 +31,7 @@ router.post('/webhook', (req, res) => {
             
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
-            if (webhook_event.message) {
+            if (webhook_event.message && !webhook_event.message.quick_reply) {
                 handleMessage(sender_psid, webhook_event.message);        
             } else if (webhook_event.postback) {
                 handlePostback(sender_psid, webhook_event.postback);
@@ -93,9 +92,9 @@ function handleMessage(sender_psid, received_message) {
     // Check if the message contains text
     if (received_message.text) {    
         // Create the payload for a basic text message
-        response = {
-            "text": `You sent the message: "${received_message.text}". Now send me an image!`
-        }
+        // response = {
+        //     "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        // }
 
         response = {
             "text": "xxx xxx staat je op te wachten aan het onthaal. Wanneer kan je er zijn?",
@@ -117,35 +116,11 @@ function handleMessage(sender_psid, received_message) {
               },
               {
                 "content_type":"text",
-                "title":"niet aanwezig op de crib",
+                "title":"niet aanwezig",
                 "payload":"niet"
               }
             ]
           };
-
-        // response = {
-        //     "attachment": {
-        //       "type": "template",
-        //       "payload": {
-        //         "template_type": "generic",
-        //         "elements": [{
-        //           "subtitle": "Er staat iemand voor je aan de deur. Kom je eraan?",
-        //           "buttons": [
-        //             {
-        //               "type": "postback",
-        //               "title": "Ja",
-        //               "payload": "yes",
-        //             },
-        //             {
-        //               "type": "postback",
-        //               "title": "Neen!",
-        //               "payload": "no",
-        //             }
-        //           ],
-        //         }]
-        //       }
-        //     }
-        //   }
 
     } else {
         response = {
@@ -165,11 +140,10 @@ function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload;
   
     // Set the response based on the postback payload
-    if (payload === 'yes') {
-      response = { "text": "Thanks!" }
-    } else if (payload === 'no') {
-      response = { "text": "Oops, try sending another image." }
+    if (payload === '10 min') {
+      response = { "text": "Alright, we geven het door aan xxx!" }
     }
+
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
   }
@@ -183,10 +157,6 @@ function callSendAPI(sender_psid, response) {
         },
         "message": response
     };
-
-    console.log('page_access_token', PAGE_ACCESS_TOKEN);
-    console.log( message );
-
 
     // Send the HTTP request to the Messenger Platform
     request({
