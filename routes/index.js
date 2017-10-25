@@ -18,20 +18,12 @@ router.post('/webhook', (req, res) => {
 
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
-
-        console.log(JSON.stringify(body));
+        console.log('entries:');
 
         body.entry.forEach(function(entry) {
 
-            console.log(entry);
-            console.log(entry.sender);
-            console.log(entry.postback);
-
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-
-            console.log( 'webhook_event' );
-            console.log( webhook_event );
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
@@ -147,12 +139,10 @@ function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
-    console.log( received_postback );
-
-    if(payload === 'REGISTER_USER') {
+    if(payload === 'REGISTER_USER") {
         response = {
-            "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich aanmeldt aan de balie"
-        };
+            "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich aanmeldt aan de balie";
+        }
     }
     
     // Set the response based on the postback payload
@@ -199,16 +189,16 @@ router.get('/enable-greeting', (req, res) => {
 
     let pageId = req.query['pageId'];
 
+    console.log( pageId );
+
     request({
-        "uri": `https://graph.facebook.com/v2.6/me/thread_settings`,
+        "uri": `https://graph.facebook.com/v2.6/me/messenger_profile`,
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
-        "json": { 
-            "setting_type":"call_to_actions",
-            "thread_state":"new_thread",
-            "call_to_actions":[{
+        "form": { 
+            "get_started": {
               "payload": "REGISTER_USER"
-            }]
+            }
           }
     }, (err, response, body) => {
         if (!err) {
