@@ -107,12 +107,17 @@ function handleMessage(sender_psid, received_message) {
               },
               {
                 "content_type":"text",
+                "title":"5 min",
+                "payload":"5",
+              },
+              {
+                "content_type":"text",
                 "title":"10 min",
                 "payload":"10"
               },
               {
                 "content_type":"text",
-                "title":"niet",
+                "title":"niet aanwezig op de crib",
                 "payload":"niet"
               }
             ]
