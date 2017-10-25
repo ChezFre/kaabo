@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router  = express.Router();
+const request = require('request');
+
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
@@ -17,6 +19,7 @@ router.post('/webhook', (req, res) => {
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
         console.log('entries:');
+
         body.entry.forEach(function(entry) {
 
             // Gets the body of the webhook event
