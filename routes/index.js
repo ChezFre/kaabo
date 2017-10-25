@@ -138,7 +138,7 @@ function handlePostback(sender_psid, received_postback) {
     
     // Get the payload for the postback
     let payload = received_postback.payload;
-  
+    
     // Set the response based on the postback payload
     if (payload === '10') {
       response = { "text": "Alright, we geven het door aan xxx!" }
@@ -177,6 +177,40 @@ function callSendAPI(sender_psid, response) {
         console.log(err);
     });
 }
+
+router.get('/enable-greeting', (req, res) => {
+    // Send the HTTP request to the Messenger Platform
+
+    let pageId = req.query['pageId'];
+
+    request({
+        "uri": `https://graph.facebook.com/v2.6/${pageId}`,
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "json": {
+            "setting_type": "call_to_actions",
+            "thread_state": "new_thread",
+            "call_to_actions": [
+                {
+                    "payload": {
+                        "text": "USER_REGISTERED"
+                    }
+                }
+            ]
+        }
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error("Unable to send message:" + err);
+        }
+    }).on('response', function(response) {
+        console.log(response.statusCode);
+    })
+    .on('error', function(err) {
+        console.log(err);
+    });
+})
 
 /////
 
