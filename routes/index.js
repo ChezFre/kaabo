@@ -98,9 +98,17 @@ function handleMessage(sender_psid, received_message) {
         }
 
         response = {
-            "type": "postback",
-            "title": "Button text",
-            "payload": "yes"
+            "payload": {
+                "template_type":"button",
+                "text":"Er staat iemand voor je aan de deur. Wanneer kan je er zijn?",
+                "buttons": [
+                    {
+                        "type":"postback",
+                        "title":"Bookmark Item",
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                      }                    
+                ]
+              }
           };
 
         // response = {
