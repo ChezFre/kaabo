@@ -186,27 +186,23 @@ router.get('/enable-greeting', (req, res) => {
     console.log( pageId );
 
     request({
-        "uri": `https://graph.facebook.com/v2.6/${pageId}`,
+        "uri": `https://graph.facebook.com/v2.6/me/messenger_profile`,
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
-        "json": {
-            "setting_type": "call_to_actions",
-            "thread_state": "new_thread",
-            "call_to_actions": [
+        "form": {
+            "get_started":[
                 {
-                    "payload": {
-                        "text": "USER_REGISTERED"
+                    "payload":"REGISTER_USER"
                     }
-                }
-            ]
+                ]
         }
     }, (err, response, body) => {
         if (!err) {
-            console.log('user registered!')
+            console.log('Added greeting!')
             res.status(200).send( body );
         } else {
-            console.error('unable to register user' + err);
-            res.status(403).send('unable to register user' + err);
+            console.error('unable to add greeting', err);
+            res.status(403).send('unable to add greeting', err);
         }
     }).on('response', function(response) {
         console.log(response.statusCode);
