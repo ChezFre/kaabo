@@ -203,7 +203,7 @@ router.get('/enable-greeting', (req, res) => {
     }, (err, response, body) => {
         if (!err) {
             console.log('user registered!')
-            res.status(200).send('user registered');
+            res.status(200).send( body );
         } else {
             console.error('unable to register user' + err);
             res.status(403).send('unable to register user' + err);
