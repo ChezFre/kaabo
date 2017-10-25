@@ -16,6 +16,7 @@ router.post('/webhook', (req, res) => {
 
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
+        console.log('entries:');
         body.entry.forEach(function(entry) {
 
             // Gets the body of the webhook event
@@ -71,10 +72,11 @@ router.get('/webhook', (req, res) => {
             // Responds with '403 Forbidden' if verify tokens do not match
             res.sendStatus(403);      
         }
-    } else {
-        // Responds with '403 Forbidden' if verify tokens do not match
-        res.sendStatus(403);      
     }
+    // } else {
+    //     // Responds with '403 Forbidden' if verify tokens do not match
+    //     res.sendStatus(403);      
+    // }
 
 });
 
