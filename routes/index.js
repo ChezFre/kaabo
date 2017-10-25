@@ -165,6 +165,7 @@ function callSendAPI(sender_psid, response) {
     };
 
     console.log('page_access_token', PAGE_ACCESS_TOKEN);
+    console.log( message );
 
 
     // Send the HTTP request to the Messenger Platform
