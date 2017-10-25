@@ -204,9 +204,11 @@ router.get('/enable-greeting', (req, res) => {
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
         "json": { 
-            "get_started": {
+            "setting_type":"call_to_actions",
+            "thread_state":"new_thread",
+            "call_to_actions":[{
               "payload": "REGISTER_USER"
-            }
+            }]
           }
     }, (err, response, body) => {
         if (!err) {
