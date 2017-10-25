@@ -98,17 +98,22 @@ function handleMessage(sender_psid, received_message) {
         }
 
         response = {
-            "text": "Here's a quick reply!",
+            "text": "xxx xxx staat je op te wachten aan het onthaal. Wanneer kan je er zijn?",
             "quick_replies":[
               {
                 "content_type":"text",
-                "title":"Search",
-                "payload":"yes",
+                "title":"1 min",
+                "payload":"1",
               },
               {
                 "content_type":"text",
-                "title":"Something Else",
-                "payload":"no"
+                "title":"10 min",
+                "payload":"10"
+              },
+              {
+                "content_type":"text",
+                "title":"niet",
+                "payload":"niet"
               }
             ]
           };
