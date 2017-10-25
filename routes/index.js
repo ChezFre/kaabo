@@ -140,7 +140,7 @@ function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload;
   
     // Set the response based on the postback payload
-    if (payload === '10 min') {
+    if (payload === '10') {
       response = { "text": "Alright, we geven het door aan xxx!" }
     }
 
