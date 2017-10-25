@@ -15,13 +15,13 @@ router.post('/webhook', (req, res) => {
     const body = req.body;
 
     console.log( body.entry );
-    console.log( body.entry.standby );
 
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
-        console.log('entries:');
 
         body.entry.forEach(function(entry) {
+
+            console.log(entry);
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
