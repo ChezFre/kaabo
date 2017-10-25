@@ -93,9 +93,34 @@ function handleMessage(sender_psid, received_message) {
     // Check if the message contains text
     if (received_message.text) {    
         // Create the payload for a basic text message
+        // response = {
+        //     "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        // }
+
         response = {
-            "text": `You sent the message: "${received_message.text}". Now send me an image!`
-        }
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [{
+                  "subtitle": "Er staat iemand voor je aan de deur. Kom je eraan?",
+                  "buttons": [
+                    {
+                      "type": "postback",
+                      "title": "Ja",
+                      "payload": "yes",
+                    },
+                    {
+                      "type": "postback",
+                      "title": "Neen!",
+                      "payload": "no",
+                    }
+                  ],
+                }]
+              }
+            }
+          }
+
     } else {
         response = {
             "text" : "Test"
@@ -108,8 +133,20 @@ function handleMessage(sender_psid, received_message) {
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
-
-}
+    let response;
+    
+    // Get the payload for the postback
+    let payload = received_postback.payload;
+  
+    // Set the response based on the postback payload
+    if (payload === 'yes') {
+      response = { "text": "Thanks!" }
+    } else if (payload === 'no') {
+      response = { "text": "Oops, try sending another image." }
+    }
+    // Send the message to acknowledge the postback
+    callSendAPI(sender_psid, response);
+  }
 
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
