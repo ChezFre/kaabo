@@ -189,13 +189,11 @@ router.get('/enable-greeting', (req, res) => {
         "uri": `https://graph.facebook.com/v2.6/me/messenger_profile`,
         "qs": { "access_token": PAGE_ACCESS_TOKEN },
         "method": "POST",
-        "form": {
-            "get_started":[
-                {
-                    "payload":"REGISTER_USER"
-                    }
-                ]
-        }
+        "json": { 
+            "get_started": {
+              "payload": "REGISTER_USER"
+            }
+          }
     }, (err, response, body) => {
         if (!err) {
             console.log('Added greeting!')
