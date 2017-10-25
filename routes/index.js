@@ -22,6 +22,8 @@ router.post('/webhook', (req, res) => {
         body.entry.forEach(function(entry) {
 
             console.log(entry);
+            console.log(entry.sender);
+            console.log(entry.postback);
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
