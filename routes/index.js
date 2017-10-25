@@ -93,33 +93,39 @@ function handleMessage(sender_psid, received_message) {
     // Check if the message contains text
     if (received_message.text) {    
         // Create the payload for a basic text message
-        // response = {
-        //     "text": `You sent the message: "${received_message.text}". Now send me an image!`
-        // }
+        response = {
+            "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        }
 
         response = {
-            "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "generic",
-                "elements": [{
-                  "subtitle": "Er staat iemand voor je aan de deur. Kom je eraan?",
-                  "buttons": [
-                    {
-                      "type": "postback",
-                      "title": "Ja",
-                      "payload": "yes",
-                    },
-                    {
-                      "type": "postback",
-                      "title": "Neen!",
-                      "payload": "no",
-                    }
-                  ],
-                }]
-              }
-            }
-          }
+            "type": "postback",
+            "title": "Button text",
+            "payload": "yes"
+          };
+
+        // response = {
+        //     "attachment": {
+        //       "type": "template",
+        //       "payload": {
+        //         "template_type": "generic",
+        //         "elements": [{
+        //           "subtitle": "Er staat iemand voor je aan de deur. Kom je eraan?",
+        //           "buttons": [
+        //             {
+        //               "type": "postback",
+        //               "title": "Ja",
+        //               "payload": "yes",
+        //             },
+        //             {
+        //               "type": "postback",
+        //               "title": "Neen!",
+        //               "payload": "no",
+        //             }
+        //           ],
+        //         }]
+        //       }
+        //     }
+        //   }
 
     } else {
         response = {
