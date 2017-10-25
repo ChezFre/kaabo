@@ -138,6 +138,14 @@ function handlePostback(sender_psid, received_postback) {
     
     // Get the payload for the postback
     let payload = received_postback.payload;
+
+    console.log( received_postback );
+
+    if(payload === 'REGISTER_USER') {
+        response = {
+            "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich aanmeldt aan de balie";
+        };
+    }
     
     // Set the response based on the postback payload
     if (payload === '10') {
