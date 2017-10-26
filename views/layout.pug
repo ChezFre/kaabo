@@ -5,3 +5,31 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+
+
+
+    script.
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId            : '#{appId}',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+
+            console.log('init');
+
+            FB.Event.subscribe('send_to_messenger', function(e) {
+                // callback for events triggered by the plugin
+                console.log(e);
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/be_NL/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));

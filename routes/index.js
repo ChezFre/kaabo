@@ -8,13 +8,19 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', {
+      title: 'Onthaal',
+      appId: '361866390932124',  // page id apps sentilo
+      pageId: '265767433564524', // page url id via https://findmyfbid.com/success/265767433564524
+      passThroughParam: 'test',
+      messengerAppId: '361866390932124' // onthaal messenger appId
+  });
 });
 
 router.post('/webhook', (req, res) => {
     const body = req.body;
 
-    console.log( body.entry );
+    console.log( JSON.stringify(body.entry) );
 
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
@@ -139,15 +145,13 @@ function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload;
 
+    // Set the response based on the postback payload
     if(payload === "REGISTER_USER") {
         response = {
-            "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich aanmeldt aan de balie"
+            "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich voor je aanmeldt aan de balie!"
         }
-    }
-    
-    // Set the response based on the postback payload
-    if (payload === '10') {
-      response = { "text": "Alright, we geven het door aan xxx!" }
+    } else {
+        response = { "text": "Alright, we geven het door aan xxx!" }
     }
 
     // Send the message to acknowledge the postback

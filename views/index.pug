@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  div(
+      class='fb-send-to-messenger',
+      page_id='265767433564524',
+      messenger_app_id=messengerAppId,
+      data-ref=passthroughParam,
+      color='white',
+      size='large'
+  )
