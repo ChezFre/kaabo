@@ -150,6 +150,7 @@ function handlePostback(sender_psid, received_postback) {
         response = {
             "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich voor je aanmeldt aan de balie!"
         }
+        // Probeer de knop in orde te krijgen en een ref parameter mee te krijgen die uniek is, zodat we de gebruiker kunnen linken aan de contentful entry
     } else {
         response = { "text": "Alright, we geven het door aan xxx!" }
     }
