@@ -212,8 +212,13 @@ router.get('/enable-greeting', (req, res) => {
         "form": { 
             "get_started": {
               "payload": "REGISTER_USER"
-            }
-          }
+            },
+            "persistent_menu": [{
+                "locale": "default",
+                "composer_input_disabled": true,
+                "call_to_actions": []
+            }]
+        }
     }, (err, response, body) => {
         if (!err) {
             console.log('Added greeting!')
