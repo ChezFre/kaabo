@@ -216,7 +216,13 @@ router.get('/enable-greeting', (req, res) => {
             "persistent_menu": [{
                 "locale": "default",
                 "composer_input_disabled": true,
-                "call_to_actions": []
+                "call_to_actions": [
+                    {
+                        "title": "Get account data",
+                        "type": "postback",
+                        "payload": "GET_ACCOUNT_DATA"
+                    },
+                ]
             }]
         }
     }, (err, response, body) => {
