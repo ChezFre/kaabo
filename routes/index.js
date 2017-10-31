@@ -17,6 +17,39 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post('/notify', (req, res, next) => {
+
+    response = {
+        text: "xxx xxx staat je op te wachten aan het onthaal. Wanneer kan je er zijn?",
+        quick_replies: [
+            {
+                content_type: "text",
+                title: "1 min",
+                payload: "1"
+            },
+            {
+                content_type: "text",
+                title: "5 min",
+                payload: "5"
+            },
+            {
+                content_type: "text",
+                title: "10 min",
+                payload: "10"
+            }, 
+            {
+                content_type: "text",
+                title: "niet aanwezig",
+                payload: "niet"
+            }
+        ]
+    };
+
+    // Call Button when phone nr is entered?
+    callSendAPI(sender_psid, response); // Even fixed psid toevoegen van mezelf, daarna via contentful psid ophalen per gebruiker
+
+});
+
 router.post('/webhook', (req, res) => {
     const body = req.body;
 
@@ -98,36 +131,11 @@ function handleMessage(sender_psid, received_message) {
     // Check if the message contains text
     if (received_message.text) {    
         // Create the payload for a basic text message
-        // response = {
-        //     "text": `You sent the message: "${received_message.text}". Now send me an image!`
-        // }
-
         response = {
-            "text": "xxx xxx staat je op te wachten aan het onthaal. Wanneer kan je er zijn?",
-            "quick_replies":[
-              {
-                "content_type":"text",
-                "title":"1 min",
-                "payload":"1",
-              },
-              {
-                "content_type":"text",
-                "title":"5 min",
-                "payload":"5",
-              },
-              {
-                "content_type":"text",
-                "title":"10 min",
-                "payload":"10"
-              },
-              {
-                "content_type":"text",
-                "title":"niet aanwezig",
-                "payload":"niet"
-              }
-            ]
-          };
+            "text": `Silly goose, you can't talk to me. I'm just a bot.`
+        }
 
+        
     } else {
         response = {
             "text" : "Test"
