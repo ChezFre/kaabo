@@ -1,5 +1,13 @@
 {
     "name": "Kaabo",
     "description": "The Kaabo back-end",
-    "repository": "https://github.com/ChezFre/kaabo"
+    "repository": "https://github.com/ChezFre/kaabo",
+    "env": {
+        "VERIFY_TOKEN": {
+            "description": ""
+        },
+        "PAGE_ACCESS_TOKEN": {
+            "description": ""
+        }
+    }
 }
