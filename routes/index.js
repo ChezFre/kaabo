@@ -121,6 +121,43 @@ router.get('/webhook', (req, res) => {
 
 });
 
+router.get('/enable-greeting', (req, res) => {
+    // Send the HTTP request to the Messenger Platform
+
+    let pageId = req.query['pageId'];
+
+    request({
+            "uri": `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
+            // "qs": { "access_token": PAGE_ACCESS_TOKEN },
+            "method": "POST",
+            "form": {
+                "get_started": {
+                    "payload": "REGISTER_USER"
+                },
+                "persistent_menu": [{
+                    "locale": "default",
+                    "composer_input_disabled": true,
+                    "call_to_actions": [{
+                        "title": "Get account data",
+                        "type": "postback",
+                        "payload": "GET_ACCOUNT_DATA"
+                    }, ]
+                }]
+            }
+        }, (err, response, body) => {
+            if (!err) {
+                console.log('Added greeting!')
+                res.status(200).send(body);
+            } else {
+                console.error('unable to add greeting', err);
+                res.status(403).send('unable to add greeting', err);
+            }
+        })
+        .on('error', function (err) {
+            console.log(err);
+        });
+})
+
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -197,49 +234,6 @@ function callSendAPI(sender_psid, response) {
     });
 }
 
-router.get('/enable-greeting', (req, res) => {
-    // Send the HTTP request to the Messenger Platform
-
-    let pageId = req.query['pageId'];
-
-    console.log( pageId );
-    console.log( `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}` );
-
-    request({
-        "uri": `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
-        // "qs": { "access_token": PAGE_ACCESS_TOKEN },
-        "method": "POST",
-        "form": { 
-            "get_started": {
-              "payload": "REGISTER_USER"
-            },
-            "persistent_menu": [{
-                "locale": "default",
-                "composer_input_disabled": true,
-                "call_to_actions": [
-                    {
-                        "title": "Get account data",
-                        "type": "postback",
-                        "payload": "GET_ACCOUNT_DATA"
-                    },
-                ]
-            }]
-        }
-    }, (err, response, body) => {
-        if (!err) {
-            console.log('Added greeting!')
-            res.status(200).send( body );
-        } else {
-            console.error('unable to add greeting', err);
-            res.status(403).send('unable to add greeting', err);
-        }
-    }).on('response', function(response) {
-        console.log(response.statusCode);
-    })
-    .on('error', function(err) {
-        console.log(err);
-    });
-})
 
 /////
 
