@@ -136,17 +136,18 @@ router.get('/enable-greeting', (req, res) => {
             "method": "POST",
             "form": {
                 "get_started": {
-                    "payload": "REGISTER_USER"
+                    "payload": "REGISTER_USER",
+                    "greeting": [
+                        {
+                            "locale":"default",
+                            "text":`Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`
+                        },
+                        {
+                            "locale":"nl_BE",
+                            "text":`Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`
+                        }
+                    ],
                 },
-                "greeting": [
-                    {
-                        "locale":"default",
-                        "text":`Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`
-                    }, {
-                        "locale":"nl_BE",
-                        "text":`Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`
-                    }
-                ],
                 "persistent_menu": [{
                     "locale": "default",
                     "composer_input_disabled": true,
