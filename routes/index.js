@@ -43,20 +43,20 @@ router.post('/notify', (req, res, next) => {
                 payload: "niet"
             },
         ],
-        "attachment":{
-            "type":"template",
-            "payload":{
-                "template_type":"button",
-                "text":"Need further assistance? Talk to a representative",
-                "buttons":[
-                    {
-                        "type":"phone_number",
-                        "title":"Call Representative",
-                        "payload":"1230"
-                    }
-                ]
-            }
-        }
+        // "attachment":{
+        //     "type":"template",
+        //     "payload":{
+        //         "template_type":"button",
+        //         "text":"Need further assistance? Talk to a representative",
+        //         "buttons":[
+        //             {
+        //                 "type":"phone_number",
+        //                 "title":"Call Representative",
+        //                 "payload":"1230"
+        //             }
+        //         ]
+        //     }
+        // }
     };
 
     // Call Button when phone nr is entered?
