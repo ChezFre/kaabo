@@ -11,3 +11,16 @@ find an employee to contact. This contact request is routed via the NodeJs back-
 ## Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+## Setup
+
+- Create a Facebook Page
+- Create a new app and add the `Messenger platform` at `developer.facebook.com`
+    - ### Messenger
+      - generate a token and enter this as the `PAGE_ACCESS_TOKEN` env
+      - select `messages`, `messaging_postbacks`, `messaging_optins` as your webhook events
+    - ### Webhooks
+      - press `edit subscription` and enter a `verify token` (random string of your likingg), you'll need to enter this token in the `VERIFY_TOKEN` env
+      - deploy your app and enter the url of your new heroku app with `/webhook` at the end
+- Open `{your-url}/enable-greeting` to enable the 'Get started' button and disable the composer screen for the bot. 
+- `POST` to `{your-url}/notify` to send a notification (currently not implemented, unless you manually copy/paste your psid from the heroku logs to the `notify` method in `routes/index.js`)
