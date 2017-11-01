@@ -141,10 +141,10 @@ router.get('/enable-greeting', (req, res) => {
                 "greeting": [
                     {
                         "locale":"default",
-                        "text":`Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`;
+                        "text":`Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`
                     }, {
                         "locale":"nl_BE",
-                        "text":`Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`;
+                        "text":`Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`
                     }
                 ],
                 "persistent_menu": [{
