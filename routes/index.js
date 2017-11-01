@@ -130,6 +130,30 @@ router.get('/enable-greeting', (req, res) => {
     let lastname  = 'Vandeborne';
     let company   = 'Novation';
 
+    request(
+      {
+        uri: `https://graph.facebook.com/v2.6/me/thread_settings?access_token=${PAGE_ACCESS_TOKEN}`,
+        // "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        method: "POST",
+        form: {
+            "setting_type":"greeting",
+            greeting: [
+                {
+                    locale: "default",
+                    text: `Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`
+                },
+                {
+                    locale: "nl_BE",
+                    text: `Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`
+                }
+            ]
+        }
+      },
+      (err, response, body) => {
+        console.log('added greeting');
+      }
+    );
+
     request({
             "uri": `https://graph.facebook.com/v2.6/me/messenger_profile?access_token=${PAGE_ACCESS_TOKEN}`,
             // "qs": { "access_token": PAGE_ACCESS_TOKEN },
@@ -137,16 +161,6 @@ router.get('/enable-greeting', (req, res) => {
             "form": {
                 "get_started": {
                     "payload": "REGISTER_USER",
-                    "greeting": [
-                        {
-                            "locale":"default",
-                            "text":`Hello {{user_first_name}}, click 'get started' to link your Facebook account. According to our information you are ${firstname} ${lastname} and you work at ${company}.`
-                        },
-                        {
-                            "locale":"nl_BE",
-                            "text":`Hallo {{user_first_name}}, klik op de knop om je Facebook account te linken. Volgens onze informatie ben je ${firstname} ${lastname} en werk je voor ${company}.`
-                        }
-                    ],
                 },
                 "persistent_menu": [{
                     "locale": "default",
