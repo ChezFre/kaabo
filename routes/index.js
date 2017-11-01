@@ -62,6 +62,7 @@ router.post('/notify', (req, res, next) => {
     // Call Button when phone nr is entered?
     callSendAPI("1367522643370788", response); // Even fixed psid toevoegen van mezelf, daarna via contentful psid ophalen per gebruiker
 
+    res.sendStatus(200).send({ description: 'Message send' })
 });
 
 router.post('/webhook', (req, res) => {
