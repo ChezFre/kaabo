@@ -8,6 +8,15 @@
         },
         "PAGE_ACCESS_TOKEN": {
             "description": ""
+        },
+        "APP_ID": {
+            "description": ""
+        },
+        "PAGE_ID": {
+            "description": ""
+        },
+        "MESSENGER_APP_ID": {
+            "description": ""
         }
     }
 }
