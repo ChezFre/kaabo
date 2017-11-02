@@ -12,14 +12,12 @@ html
     script.
         window.fbAsyncInit = function() {
             FB.init({
-            appId            : '#{appId}',
-            autoLogAppEvents : true,
-            xfbml            : true,
-            version          : 'v2.10'
+                appId            : '#{app_id}',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.10'
             });
             FB.AppEvents.logPageView();
-
-            console.log('init');
 
             FB.Event.subscribe('send_to_messenger', function(e) {
                 // callback for events triggered by the plugin

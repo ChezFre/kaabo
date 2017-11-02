@@ -10,10 +10,10 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 router.get('/', function(req, res, next) {
   res.render('index', {
       title: 'Onthaal',
-      appId: '361866390932124',  // page id apps sentilo
-      pageId: '265767433564524', // page url id via https://findmyfbid.com/success/265767433564524
-      passThroughParam: 'test',
-      messengerAppId: '361866390932124' // onthaal messenger appId
+      app_id: process.env.APP_ID,
+      page_id: process.env.PAGE_ID,
+      messenger_app_id: process.env.MESSENGER_APP_ID,
+      ref: '1234',
   });
 });
 
