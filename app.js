@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+const io  = require('socket.io')();
+
 var app = express();
 
 // view engine setup
@@ -42,5 +44,19 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+io.on('connection', (client) => {
+    // here you can start emitting events to the client 
+    console.log('client connected');
+
+    client.on('subscribeToTimer', (interval) => {
+        console.log('client is subscribing to timer with interval ', interval);
+        setInterval(() => {
+            client.emit('timer', new Date());
+        }, interval);
+    });
+});
+
+io.listen(8000);
 
 module.exports = app;
