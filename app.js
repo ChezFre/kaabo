@@ -23,9 +23,17 @@ var users = require('./routes/users');
 
 
 // Socket.io
-var io        = socket_io();
+var socket        = socket_io();
 
-app.io        = io;
+app.socket        = socket;
+
+socket.on('connect', function () {
+    alert('Socket is connected.');
+});
+
+socket.on('disconnect', function () {
+    alert('Socket is disconnected.');
+});
 
 
 // view engine setup
