@@ -8,9 +8,12 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-const io  = require('socket.io')();
 
 var app = express();
+
+var server = require('http').createServer(app);
+
+const io  = require('socket.io')(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +60,6 @@ io.on('connection', (client) => {
     });
 });
 
-io.listen(8000);
+setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 
 module.exports = app;
