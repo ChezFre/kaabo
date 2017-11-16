@@ -1,19 +1,32 @@
 var express = require('express');
-var path = require('path');
+var path    = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var logger  = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var bodyParser   = require('body-parser');
+
+
+var socket_io    = require('socket.io');
+
+
+
+// Express
+
+var app = express();
+
+
+
+// Routes
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 
-var app = express();
+// Socket.io
+var io        = socket_io();
 
-var server = require('http').createServer(app);
+app.io        = io;
 
-const io  = require('socket.io')(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,18 +61,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-io.on('connection', (client) => {
-    // here you can start emitting events to the client 
+
+
+
+io.on('connection', function(socket) {
     console.log('client connected');
+    console.log( socket );
+})
 
-    client.on('subscribeToTimer', (interval) => {
-        console.log('client is subscribing to timer with interval ', interval);
-        setInterval(() => {
-            client.emit('timer', new Date());
-        }, interval);
-    });
-});
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+
 
 module.exports = app;
