@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/notify', (req, res, next) => {
 
+    console.log(req.body);
+
     response = {
         text: `${req.body.name} staat je op te wachten aan het onthaal. Wanneer kan je er zijn?`,
         quick_replies: [

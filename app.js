@@ -37,7 +37,7 @@ socket.on('disconnect', function () {
 
 socket.on('connection', function (socket) {
     console.log('client connected');
-    console.log(socket);
+    // console.log(socket);
 })
 
 socket.on('connect_error', function (e) {
