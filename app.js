@@ -28,11 +28,11 @@ var socket        = socket_io();
 app.socket        = socket;
 
 socket.on('connect', function () {
-    alert('Socket is connected.');
+    console.log('Socket is connected.');
 });
 
 socket.on('disconnect', function () {
-    alert('Socket is disconnected.');
+    console.log('Socket is disconnected.');
 });
 
 socket.on('connection', function (socket) {
