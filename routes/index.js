@@ -17,11 +17,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.options('/notify', (req, res, next) => {
+    next();
+})
+
+
 router.post('/notify', (req, res, next) => {
-
-    console.log(req.body);
-
-    response = {
+        
+    let response = {
         text: `${req.body.name} staat je op te wachten aan het onthaal. Wanneer kan je er zijn?`,
         quick_replies: [
             {
@@ -64,7 +67,8 @@ router.post('/notify', (req, res, next) => {
     // Call Button when phone nr is entered?
     callSendAPI("1367522643370788", response); // Even fixed psid toevoegen van mezelf, daarna via contentful psid ophalen per gebruiker
 
-    res.sendStatus(200).send({ description: 'Message send' })
+    // res.sendStatus(200).send({ description: 'Message send' })
+
 });
 
 router.post('/webhook', (req, res) => {
@@ -90,6 +94,7 @@ router.post('/webhook', (req, res) => {
             if (webhook_event.message && !webhook_event.message.quick_reply) {
                 handleMessage(sender_psid, webhook_event.message);        
             } else if (webhook_event.postback) {
+                console.log('dit is een antwoord via messenger');
                 handlePostback(sender_psid, webhook_event.postback);
             }
         });
@@ -244,6 +249,9 @@ function handlePostback(sender_psid, received_postback) {
     } else {
         response = { "text": "Alright, we geven het door aan xxx!" }
     }
+
+    console.log('send feedback via socket');
+    app.socket.emit('feedback', 'Een boodschap voor de front-end');
 
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
