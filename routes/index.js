@@ -104,7 +104,7 @@ router.post('/webhook', (req, res) => {
                 } else {
                     app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer na om een nieuwe afspraak te maken.`);
                 }
-
+                console.log('dit is een quick reply');
                 callSendAPI("1367522643370788", 'Bedankt, we geven het door!');
             }
         });
