@@ -24,6 +24,12 @@ var server = http.createServer(app);
 
 app.socket.attach( server );
 
+app.socket.on('connection', (socket) => {
+    socket.broadcast.emit('hi');
+});
+
+app.socket.io.emit('feedback', 'Hello, testing');
+
 /**
  * Listen on provided port, on all network interfaces.
  */
