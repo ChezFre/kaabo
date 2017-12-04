@@ -98,8 +98,8 @@ router.post('/webhook', (req, res) => {
             } else if (webhook_event.postback) {
                 console.log('dit is een antwoord via messenger');
                 handlePostback(sender_psid, webhook_event.postback);
-            } else if( webhook_event.message.quick_reply ) {
-                if( !isNaN(webhook_event.message.quick_reply.payload) ) {
+            } else if (webhook_event.message.quick_reply ) {
+                if (!isNaN(webhook_event.message.quick_reply.payload) ) {
                     app.socket.emit('feedback', `Binnen ${webhook_event.message.quick_reply.payload} kom ik je ophalen!`);
                 } else {
                     app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer na om een nieuwe afspraak te maken.`);
