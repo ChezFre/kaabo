@@ -88,6 +88,8 @@ router.post('/webhook', (req, res) => {
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
             console.log('Sender PSID: ' + sender_psid);
+
+            console.log(webhook_event);
             
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
@@ -99,7 +101,7 @@ router.post('/webhook', (req, res) => {
             }
         });
 
-        app.socket.emit('feedback', webhook_event.postback);
+        // app.socket.emit('feedback', webhook_event.postback);
 
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
