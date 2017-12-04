@@ -29,22 +29,22 @@ router.post('/notify', (req, res, next) => {
         quick_replies: [
             {
                 content_type: "text",
-                title: "1 min",
-                payload: "1"
+                title: "1 minuut",
+                payload: "1 min"
             },
             {
                 content_type: "text",
-                title: "5 min",
+                title: "5 minuten",
                 payload: "5"
             },
             {
                 content_type: "text",
-                title: "10 min",
+                title: "10 minuten",
                 payload: "10"
             }, 
             {
                 content_type: "text",
-                title: "niet aanwezig",
+                title: "Niet aanwezig",
                 payload: "niet"
             },
         ],
@@ -98,10 +98,15 @@ router.post('/webhook', (req, res) => {
             } else if (webhook_event.postback) {
                 console.log('dit is een antwoord via messenger');
                 handlePostback(sender_psid, webhook_event.postback);
+            } else if( webhook_event.message.quick_reply ) {
+                if( !isNaN(webhook_event.message.quick_reply.payload) ) {
+                    app.socket.emit('feedback', `Binnen ${webhook_event.message.quick_reply.payload} kom ik je ophalen!`);
+                } else {
+                    app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer na om een nieuwe afspraak te maken.`);
+                }
             }
         });
 
-        // app.socket.emit('feedback', webhook_event.postback);
 
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
