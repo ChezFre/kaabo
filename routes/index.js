@@ -74,8 +74,6 @@ router.post('/notify', (req, res, next) => {
 router.post('/webhook', (req, res) => {
     const body = req.body;
 
-    console.log( JSON.stringify(body.entry) );
-
     if( body.object == 'page') {
         // Iterates over each entry - there may be multiple if batched
         console.log('entries:');
@@ -89,7 +87,7 @@ router.post('/webhook', (req, res) => {
             let sender_psid = webhook_event.sender.id;
             console.log('Sender PSID: ' + sender_psid);
 
-            console.log(webhook_event);
+            console.log(webhook_event.message.quick_reply.payload);
             
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
