@@ -24,7 +24,7 @@ var server = http.createServer(app);
 
 app.socket.attach( server );
 
-io.on('connection', function (socket) {
+app.socket.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('disconnect', function () {
         console.log('user disconnected');
