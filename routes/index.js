@@ -99,6 +99,8 @@ router.post('/webhook', (req, res) => {
             }
         });
 
+        app.socket.emit('feedback', webhook_event.postback);
+
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
     } else {

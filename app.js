@@ -37,13 +37,7 @@ socket.on('disconnect', function () {
 
 socket.on('connection', function (socket) {
     console.log('client connected');
-    // console.log(socket);
-
-    setInterval(() => {
-        socket.emit('feedback', 'Testing');
-    }, 1000);
-
-})
+});
 
 socket.on('connect_error', function (e) {
     console.log('Failed to connect to server');
