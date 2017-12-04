@@ -28,7 +28,10 @@ app.socket.on('connection', (socket) => {
     socket.broadcast.emit('hi');
 });
 
-app.socket.emit('feedback', 'Hello, testing');
+setInterval(() => {
+    console.log('emit event');
+    app.socket.emit('Hello, testing');
+}, 1000);
 
 /**
  * Listen on provided port, on all network interfaces.
