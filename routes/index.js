@@ -21,6 +21,10 @@ router.get('/', function(req, res, next) {
 //     next();
 // });
 
+/*
+ * Builds message to send to employee via Facebook Messenger when visitor signs up at front desk
+ *  
+ */
 router.post('/notify', (req, res, next) => {
 
     console.log('/notify post');
@@ -49,27 +53,15 @@ router.post('/notify', (req, res, next) => {
                 title: "Niet aanwezig",
                 payload: "niet"
             },
-        ],
-        // "attachment":{
-        //     "type":"template",
-        //     "payload":{
-        //         "template_type":"button",
-        //         "text":"Need further assistance? Talk to a representative",
-        //         "buttons":[
-        //             {
-        //                 "type":"phone_number",
-        //                 "title":"Call Representative",
-        //                 "payload":"1230"
-        //             }
-        //         ]
-        //     }
-        // }
+        ]
     };
 
-    // Call Button when phone nr is entered?
-    callSendAPI("1367522643370788", response); // Even fixed psid toevoegen van mezelf, daarna via contentful psid ophalen per gebruiker
+    // Temporarily uses fixed PSID
+    callSendAPI("1367522643370788", response);
 
-    res.sendStatus(200);//.send({ description: 'Message sent' })
+
+    //
+    res.sendStatus(200).send({ description: 'Message sent' });
 
 });
 
@@ -90,31 +82,27 @@ router.post('/webhook', (req, res) => {
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
-
-            console.log(webhook_event);
-            console.log(webhook_event.message.quick_reply.payload);
             
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message && !webhook_event.message.quick_reply) {
-                console.log('dit is een message');
+                
+                console.log('Received basic message from Facebook. AFAIK this should not be possible');
                 handleMessage(sender_psid, webhook_event.message);        
-            } else if (webhook_event.postback) {
-                console.log('dit is een antwoord via messenger');
-                handlePostback(sender_psid, webhook_event.postback);
-            } else if (webhook_event.message.quick_reply ) {
-                console.log('dit is een quick reply');
-                if (!isNaN(webhook_event.message.quick_reply.payload) ) {
-                    console.log(`Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload}`);
-                    app.socket.emit('feedback', `Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload} minuten`);
 
-                    console.log('---');
-                    console.log(app.socket);
-                    console.log('---');
+            } else if (webhook_event.postback) {
+
+                console.log('Received postback from Facebook');
+                handlePostback(sender_psid, webhook_event.postback);
+
+            } else if (webhook_event.message.quick_reply ) {
+                
+                console.log('Received quick reply from Facebook');
+
+                if (!isNaN(webhook_event.message.quick_reply.payload) ) {
+                    console.log(`Send message via socketio: Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload}.`);
                 } else {
-                    console.log(`Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
-                    app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
+                    console.log(`Send message via socketio: Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
                 }
 
                 var response = { "text": "Alright, we geven het door aan xxx!" }
@@ -164,6 +152,10 @@ router.get('/webhook', (req, res) => {
 
 });
 
+/*
+ * Adds button to Facebook Messenger that enabled a 'Get Started' button and adds a button for a user to register
+ * 
+ */
 router.get('/enable-greeting', (req, res) => {
     // Send the HTTP request to the Messenger Platform
 
@@ -230,25 +222,28 @@ router.get('/enable-greeting', (req, res) => {
 })
 
 
-// Handles messages events
+/*
+ * Builds responses to basic messages
+ */
+
 function handleMessage(sender_psid, received_message) {
     let response;
 
     console.log('handleMessage', received_message.text);
 
     // Check if the message contains text
-    if (received_message.text) {    
+    // if (received_message.text) {    
         // Create the payload for a basic text message
         response = {
             "text": `Silly goose, you can't talk to me. I'm just a bot.`
         }
 
         
-    } else {
-        response = {
-            "text" : "Test"
-        };
-    }
+    // } else {
+    //     response = {
+    //         "text" : "Test"
+    //     };
+    // }
     
     // Sends the response message
     callSendAPI(sender_psid, response);   
@@ -263,22 +258,27 @@ function handlePostback(sender_psid, received_postback) {
 
     // Set the response based on the postback payload
     if(payload === "REGISTER_USER") {
+        // Probeer de knop in orde te krijgen en een ref parameter mee te krijgen die uniek is, zodat we de gebruiker kunnen linken aan de contentful entry
         response = {
             "text": "Je gegevens werden opgeslagen. Vanaf nu krijg je een Facebook melding als iemand zich voor je aanmeldt aan de balie!"
-        }
-        // Probeer de knop in orde te krijgen en een ref parameter mee te krijgen die uniek is, zodat we de gebruiker kunnen linken aan de contentful entry
+        };
     } else {
-        response = { "text": "Alright, we geven het door aan xxx!" }
+        response = {
+            "text": "Alright, we geven het door aan xxx!"
+        };
     }
 
-    console.log('send feedback via socket');
-    app.socket.emit('feedback', 'Een boodschap voor de front-end');
+    // console.log('send feedback via socket');
+    // app.socket.emit('feedback', 'Een boodschap voor de front-end');
 
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
   }
 
-// Sends response messages via the Send API
+
+/*
+ * Uses the Facebook Send API to send messages via Facebook Messenger
+ */
 function callSendAPI(sender_psid, response) {
     // Construct the message body
     let message = {
