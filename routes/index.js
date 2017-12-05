@@ -17,12 +17,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.options('/notify', (req, res, next) => {
-    next();
-})
-
+// router.options('/notify', (req, res, next) => {
+//     next();
+// });
 
 router.post('/notify', (req, res, next) => {
+
+    console.log('/notify post');
+    console.log(req.body);
         
     let response = {
         text: `${req.body.name} staat je op te wachten aan het onthaal. Wanneer kan je er zijn?`,
