@@ -101,6 +101,8 @@ router.post('/webhook', (req, res) => {
                     console.log(`Send message via socketio: Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
                 }
 
+                app.socket.broadcast.emit('feedback', webhook_event.message.quick_reply);
+
                 var response = { "text": "Alright, we geven het door aan xxx!" }
                 callSendAPI("1367522643370788", response);
             }
