@@ -17,17 +17,13 @@ router.get('/', function(req, res, next) {
   });
 });
 
-// router.options('/notify', (req, res, next) => {
-//     next();
-// });
-
 /*
  * Builds message to send to employee via Facebook Messenger when visitor signs up at front desk
  *  
  */
 router.post('/notify', (req, res, next) => {
 
-    console.log('/notify post');
+    console.log('/notify post. Does body contain information?');
     console.log(req.body);
         
     let response = {
@@ -61,7 +57,7 @@ router.post('/notify', (req, res, next) => {
 
 
     //
-    res.sendStatus(200).send({ description: 'Message sent' });
+    res.sendStatus(200);
 
 });
 
