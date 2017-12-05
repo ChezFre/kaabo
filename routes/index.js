@@ -67,7 +67,7 @@ router.post('/notify', (req, res, next) => {
     // Call Button when phone nr is entered?
     callSendAPI("1367522643370788", response); // Even fixed psid toevoegen van mezelf, daarna via contentful psid ophalen per gebruiker
 
-    // res.sendStatus(200).send({ description: 'Message send' })
+    res.sendStatus(200).send({ description: 'Message sent' })
 
 });
 
@@ -101,9 +101,11 @@ router.post('/webhook', (req, res) => {
             } else if (webhook_event.message.quick_reply ) {
                 console.log('dit is een quick reply');
                 if (!isNaN(webhook_event.message.quick_reply.payload) ) {
-                    app.socket.emit('feedback', `Binnen ${webhook_event.message.quick_reply.payload} kom ik je ophalen!`);
+                    console.log(`Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload}`);
+                    app.socket.emit('feedback', `Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload}`);
                 } else {
-                    app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer na om een nieuwe afspraak te maken.`);
+                    console.log(`Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
+                    app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
                 }
 
                 var response = { "text": "Alright, we geven het door aan xxx!" }
