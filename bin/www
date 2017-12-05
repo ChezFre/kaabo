@@ -22,7 +22,11 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-app.socket.attach( server );
+/**
+ * Add Socket io
+ */
+
+app.socket.attach(server);
 
 app.socket.on('connection', function (socket) {
     console.log('a user connected');
@@ -31,6 +35,7 @@ app.socket.on('connection', function (socket) {
     });
 });
 
+
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -38,6 +43,8 @@ app.socket.on('connection', function (socket) {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
 
 /**
  * Normalize a port into a number, string, or false.

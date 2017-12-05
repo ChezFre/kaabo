@@ -1,20 +1,21 @@
 const express = require('express');
 const router  = express.Router();
 const request = require('request');
-
+const debug = require('debug')('onthaal-backend:server');
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {
-      title: 'Onthaal',
-      app_id: process.env.APP_ID,
-      page_id: process.env.PAGE_ID,
-      messenger_app_id: process.env.MESSENGER_APP_ID,
-      ref: '1234',
-  });
+
+    res.render('index', {
+        title: 'Onthaal',
+        app_id: process.env.APP_ID,
+        page_id: process.env.PAGE_ID,
+        messenger_app_id: process.env.MESSENGER_APP_ID,
+        ref: '1234',
+    });
 });
 
 /*
@@ -22,9 +23,6 @@ router.get('/', function(req, res, next) {
  *  
  */
 router.post('/notify', (req, res, next) => {
-
-    console.log('/notify post. Does body contain information?');
-    console.log(req.body);
         
     let response = {
         text: `${req.body.name} staat je op te wachten aan het onthaal. Wanneer kan je er zijn?`,
@@ -101,9 +99,9 @@ router.post('/webhook', (req, res) => {
                     console.log(`Send message via socketio: Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
                 }
 
-                app.socket.broadcast.emit('feedback', webhook_event.message.quick_reply);
+                req.app.socket.sockets.emit('feedback', webhook_event.message.quick_reply);
 
-                var response = { "text": "Alright, we geven het door aan xxx!" }
+                var response = { "text": "We geven het door aan xxx!" }
                 callSendAPI("1367522643370788", response);
             }
         });
