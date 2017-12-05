@@ -104,8 +104,9 @@ router.post('/webhook', (req, res) => {
                     console.log(`Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload}`);
                     app.socket.emit('feedback', `Ik kom je ophalen binnen ${webhook_event.message.quick_reply.payload} minuten`);
 
+                    console.log('---');
                     console.log(app.socket);
-
+                    console.log('---');
                 } else {
                     console.log(`Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
                     app.socket.emit('feedback', `Ik ben momenteel niet op kantoor, laat je nummer achter om een nieuwe afspraak te maken.`);
